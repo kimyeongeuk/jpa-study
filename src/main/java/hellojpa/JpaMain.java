@@ -1,8 +1,14 @@
 package hellojpa;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Hibernate;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
 
@@ -13,23 +19,23 @@ public class JpaMain {
         tx.begin();
         try {
 
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
-//          List<Member> result =  em.createQuery("select m from Member as m",Member.class)
-//                  .getResultList();
+            Root<Member> m = query.from(Member.class);
 
-            
-            Member findM1 = em.find(Member.class,101L);
-            Member findM2 = em.find(Member.class,101L);
-            System.out.println("findM.getId() = " + findM1.getId());
-            System.out.println("findM.getName() = " + findM1.getName());
-            System.out.println("findM.getId() = " + findM2.getId());
-            System.out.println("findM.getName() = " + findM2.getName());
-            System.out.println("findM1 == findM2 = " + (findM1 == findM2));
+            CriteriaQuery<Member> where = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            List<Member> resultList = em.createQuery(where).getResultList();
+
+
+
+
 
             tx.commit();
 
         }catch(Exception e) {
             tx.rollback();
+            e.printStackTrace();
         }finally{
             em.close();
         }
@@ -38,5 +44,6 @@ public class JpaMain {
 
 
     }
+
 
 }
