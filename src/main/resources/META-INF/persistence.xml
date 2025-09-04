@@ -1,0 +1,21 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             version="2.2" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="hello">
+        <properties>
+            <!--  필수 속성  -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="jakarta.persistence.jdbc.user" value="sa"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
+            <property name="hibernate.dialect" value="dialect.MyH2Dialect"/>
+
+            <!--  옵션  -->
+            <property name="hibernate.show_sql" value="true"/> <!-- sql쿼리 보이기  -->
+            <property name="hibernate.format_sql" value="true"/> <!-- 쿼리문 보기 편하게 편집 -->
+            <property name="hibernate.use_sql_comments" value="true"/><!-- 쿼리가 뭐떄문에 나온지 이유알려줌 -->
+            <property name="hibernate.jdbc.batch_size"  value="10"/> <!-- 10개 단위로 쿼리 보내기 -->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.default_batch_fetch_size" value="100"  />
+        </properties>
+    </persistence-unit>
+</persistence>
